@@ -8,6 +8,9 @@ function setup()
     canvas.center();
     video=createCapture(VIDEO);
     video.hide();
+
+    poseNet=ml5.poseNet(video,modelLoaded);
+    poseNet.on("pose",gotPoses);
 }
 function draw()
 {
@@ -16,4 +19,17 @@ function draw()
 function take_snapshot()
 {
     save("Mustache");
+}
+function modelLoaded()
+{
+    console.log("PoseNet is Initialized");
+}
+function gotPoses(results)
+{
+if(results)
+{
+    console.log(results);
+    console.log("Left eye position="+results[0].pose.leftEye.x);
+    console.log("Right eye position="+results[0].pose.rightEye.y);
+}
 }
